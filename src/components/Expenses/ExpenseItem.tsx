@@ -16,6 +16,9 @@ export const ExpenseItem: FC<ExpenseItemProps> = (props) => {
         <h2 className='text-2xl'>{title}</h2>
         <div className='font-bold border-black border p-2'>$ {price}</div>
       </div>
+      <button onClick={() => console.log('clicked')} className=' px-2'>
+        Change title
+      </button>
     </Card>
   )
 }

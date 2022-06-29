@@ -1,15 +1,26 @@
+import { FC, useState } from 'react'
+import { ExpenseI } from '../../App'
 import { Card } from '../UI/Card'
-import { ExpenseItem } from './ExpenseItem'
+import { ExpenseFilter } from './ExpenseFilter'
+import { ExpensesChart } from './ExpensesChart'
+import { ExpensesList } from './ExpensesList'
 
-function Expenses() {
-  const expense = [
-    { title: 'car insurance', date: new Date(2022, 6, 28), price: 204.23 },
-    { title: 'car insurance', date: new Date(2022, 6, 28), price: 204.23 },
-  ]
+const Expenses: FC<{ expenses: ExpenseI[] }> = ({ expenses }) => {
+  const [filteredYear, setFilteredYear] = useState('2020')
+
+  const filterChangeHandler = (selectedYear: string) => {
+    setFilteredYear(selectedYear)
+  }
+
+  const filteredExpenses = expenses.filter((expense: ExpenseI) => {
+    return expense.date.getFullYear().toString() === filteredYear
+  })
+
   return (
     <Card className='w-full p-4'>
-      <ExpenseItem {...expense[0]} />
-      <ExpenseItem {...expense[1]} />
+      <ExpenseFilter selected={filteredYear} onChangeFilter={filterChangeHandler} />
+      <ExpensesChart expenses={filteredExpenses} />
+      <ExpensesList expenses={filteredExpenses} />
     </Card>
   )
 }
